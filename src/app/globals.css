@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────
+   SISTEMA DE DISEÑO — Glass Skin UY (Clean Luxury / Skincare)
+   Tailwind v4: todo lo que va en @theme se convierte en utilidad.
+   --color-champan  ->  bg-champan / text-champan / border-champan
+   Cambiás un hex acá y cambia toda la web. No toques colores sueltos
+   en los componentes.
+   ────────────────────────────────────────────────────────────── */
+@theme {
+  /* Base: negros sobrios y apenas fríos, estética clínica. */
+  --color-noche: #0f0f11;
+  --color-carbon: #151518;
+  --color-humo: #1d1d21;
+  --color-borde: #2b2b31;
+
+  /* Acentos */
+  --color-champan: #d4af37; /* dorado suave: precios, CTA principal */
+  --color-oro-claro: #e6cd7a; /* hover / brillos */
+  --color-oro-vivo: #d4af37; /* glow de tarjetas */
+  --color-vetiver: #8fb39a; /* verde botánico: ingredientes, WhatsApp, "ok" */
+  --color-cristal: #e9dfcf; /* beige cristalino: detalles y superficies claras */
+
+  /* Texto */
+  --color-marfil: #f4efe7;
+  --color-arena: #aaa39a;
+
+  /* Tipografías (las inyecta next/font desde layout.tsx) */
+  --font-display: var(--font-display-familia), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-sans-familia), ui-sans-serif, system-ui, sans-serif;
+
+  /* Escala tipográfica (proporción ~1.25, redondeada a píxeles limpios) */
+  --text-micro: 0.75rem;
+  --text-cuerpo: 1rem;
+  --text-medio: 1.25rem;
+  --text-titulo: clamp(1.75rem, 1.2rem + 2.4vw, 3rem);
+  --text-hero: clamp(2.75rem, 1.5rem + 5.5vw, 5.5rem);
+
+  --radius-vial: 1.75rem;
+}
+
+/* ── Base ─────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  /* Barra de anuncio (32px) + header (72px): evita que las anclas queden tapadas. */
+  scroll-padding-top: 6.7rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-noche);
+  color: var(--color-marfil);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Números alineados en precios y mililitros. */
+.cifras {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Foco visible y coherente en todo el sitio (accesibilidad de teclado). */
+:where(a, button, input, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-champan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-champan);
+  color: var(--color-noche);
+}
+
+/* ── Utilidades propias ───────────────────────────────────────── */
+
+/* Vidrio: superficie translúcida con borde cálido. Se usa en el header
+   y en las tarjetas, nunca sobre fondos planos sin nada detrás. */
+@utility vidrio {
+  background-color: color-mix(in oklab, var(--color-carbon) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--color-borde) 85%, transparent);
+}
+
+/* Filo dorado: línea de luz fina para separar secciones. */
+@utility filo-oro {
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--color-champan) 55%, transparent),
+    transparent
+  );
+}
+
+/* Kicker editorial: la etiqueta chica en mayúsculas arriba de un título de
+   sección ("LA RUTINA", "ENVÍOS"). */
+@utility kicker {
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-champan);
+}
+
+/* Glow dorado de tarjeta: un halo apenas visible al hover (usar con
+   `hover:glow-oro` + `transition-shadow`), nunca un brillo genérico blanco. */
+@utility glow-oro {
+  box-shadow: 0 0 32px -8px color-mix(in oklab, var(--color-oro-vivo) 45%, transparent);
+}
+
+/* Contenedor único del sitio. */
+@utility marco {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 768px) {
+  .marco {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* ── Movimiento reducido ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

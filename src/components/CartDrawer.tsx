@@ -1,0 +1,286 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  useCarrito,
+  useCarritoListo,
+  useLineas,
+  useTotal,
+} from "@/lib/cartStore";
+import { precio } from "@/lib/format";
+import { linkWhatsApp, site } from "@/lib/site";
+import ImagenProducto from "./ImagenProducto";
+import CheckoutModal from "./CheckoutModal";
+
+/** Arma el mensaje de WhatsApp con el detalle del pedido, línea por línea. */
+function mensajePedidoWhatsApp(
+  lineas: ReturnType<typeof useLineas>,
+  total: number,
+): string {
+  const detalle = lineas
+    .map(
+      (l) =>
+        `- ${l.cantidad}x ${l.producto.nombre} (${precio(l.producto.precio)})`,
+    )
+    .join("\n");
+  return `Hola! Quiero realizar el siguiente pedido:\n${detalle}\nTotal: ${precio(total)} (UYU)`;
+}
+
+/**
+ * Carrito lateral.
+ *
+ * "Ir a pagar" no cobra acá: manda los items a /api/checkout, el
+ * servidor arma la preferencia de Mercado Pago con los precios reales y
+ * devuelve la URL del Checkout Pro. Recién ahí redirigimos.
+ */
+export default function CartDrawer() {
+  const abierto = useCarrito((e) => e.abierto);
+  const cerrar = useCarrito((e) => e.cerrarCarrito);
+  const ajustar = useCarrito((e) => e.ajustarCantidad);
+  const eliminar = useCarrito((e) => e.eliminar);
+
+  const lineas = useLineas();
+  const total = useTotal();
+  const listo = useCarritoListo();
+
+  const [checkoutAbierto, setCheckoutAbierto] = useState(false);
+  const botonCerrar = useRef<HTMLButtonElement>(null);
+
+  // Escape cierra, y el foco entra al panel al abrirse (accesibilidad).
+  useEffect(() => {
+    if (!abierto) return;
+    botonCerrar.current?.focus();
+    const alTeclear = (e: KeyboardEvent) => {
+      if (e.key === "Escape") cerrar();
+    };
+    window.addEventListener("keydown", alTeclear);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", alTeclear);
+      document.body.style.overflow = "";
+    };
+  }, [abierto, cerrar]);
+
+  return (
+    <AnimatePresence>
+      {abierto && (
+        <>
+          <motion.div
+            key="fondo"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={cerrar}
+            className="fixed inset-0 z-[60] bg-noche/70 backdrop-blur-[2px]"
+            aria-hidden
+          />
+
+          <motion.aside
+            key="panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Tu carrito"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 320, damping: 36 }}
+            className="fixed inset-y-0 right-0 z-[70] flex w-full max-w-md flex-col border-l border-borde bg-carbon"
+          >
+            <header className="flex items-center justify-between border-b border-borde px-6 py-5">
+              <h2 className="font-display text-[1.4rem] text-marfil">
+                Tu carrito
+              </h2>
+              <button
+                ref={botonCerrar}
+                type="button"
+                onClick={cerrar}
+                aria-label="Cerrar carrito"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-borde text-arena transition-colors hover:border-arena hover:text-marfil"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden>
+                  <path
+                    d="M6 6l12 12M18 6L6 18"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </button>
+            </header>
+
+            {/* Lista de productos */}
+            <div className="flex-1 overflow-y-auto px-6">
+              {!listo ? null : lineas.length === 0 ? (
+                <div className="flex h-full flex-col items-center justify-center text-center">
+                  <p className="font-display text-[1.3rem] text-marfil">
+                    Tu carrito está vacío
+                  </p>
+                  <p className="mt-2 max-w-[30ch] text-sm text-arena">
+                    Empezá por el Kit Rutina Coreana 3 Pasos: todo lo que tu piel necesita.
+                  </p>
+                  <Link
+                    href="/catalogo"
+                    onClick={cerrar}
+                    className="mt-6 rounded-full bg-champan px-6 py-3 text-sm font-medium text-noche transition-colors hover:bg-oro-claro"
+                  >
+                    Ver la tienda
+                  </Link>
+                </div>
+              ) : (
+                <ul className="divide-y divide-borde">
+                  <AnimatePresence>
+                    {lineas.map((linea, i) => (
+                      <motion.li
+                        key={linea.producto.id}
+                        layout
+                        initial={{ opacity: 0, x: 24 }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                          transition: { duration: 0.25, delay: i * 0.06 },
+                        }}
+                        exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex gap-4 py-5"
+                      >
+                        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-humo">
+                          <ImagenProducto
+                            producto={linea.producto}
+                            sizes="80px"
+                            className="object-cover"
+                          />
+                        </div>
+
+                        <div className="min-w-0 flex-1">
+                          <h3 className="truncate font-display text-[1.1rem] text-marfil">
+                            {linea.producto.nombre}
+                          </h3>
+                          <p className="cifras mt-0.5 text-micro text-arena">
+                            {linea.producto.contenido}
+                          </p>
+
+                          <div className="mt-3 flex items-center justify-between gap-3">
+                            <div className="flex items-center rounded-full border border-borde">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  ajustar(
+                                    linea.producto.id,
+                                    linea.cantidad - 1,
+                                  )
+                                }
+                                aria-label={`Quitar una unidad de ${linea.producto.nombre}`}
+                                className="h-8 w-8 text-arena transition-colors hover:text-marfil"
+                              >
+                                −
+                              </button>
+                              <span className="cifras w-6 text-center text-sm text-marfil">
+                                {linea.cantidad}
+                              </span>
+                              <button
+                                type="button"
+                                disabled={
+                                  linea.cantidad >= linea.producto.stock
+                                }
+                                onClick={() =>
+                                  ajustar(
+                                    linea.producto.id,
+                                    linea.cantidad + 1,
+                                  )
+                                }
+                                aria-label={`Agregar una unidad de ${linea.producto.nombre}`}
+                                className="h-8 w-8 text-arena transition-colors hover:text-marfil disabled:opacity-30 disabled:hover:text-arena"
+                              >
+                                +
+                              </button>
+                            </div>
+
+                            <p className="cifras text-champan">
+                              {precio(linea.subtotal)}
+                            </p>
+                          </div>
+
+                          {linea.cantidad >= linea.producto.stock && (
+                            <p className="mt-2 text-micro text-arena">
+                              Es todo el stock que tenemos de este.
+                            </p>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={() => eliminar(linea.producto.id)}
+                            className="mt-2 text-micro text-arena underline-offset-4 transition-colors hover:text-marfil hover:underline"
+                          >
+                            Quitar
+                          </button>
+                        </div>
+                      </motion.li>
+                    ))}
+                  </AnimatePresence>
+                </ul>
+              )}
+            </div>
+
+            {/* Resumen y pago */}
+            {lineas.length > 0 && (
+              <footer className="border-t border-borde px-6 py-5">
+                <div className="flex items-baseline justify-between">
+                  <span className="text-marfil">Total <span className="text-micro text-arena">(UYU)</span></span>
+                  <motion.span
+                    key={total}
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.18 }}
+                    className="cifras text-2xl text-champan"
+                  >
+                    {precio(total)}
+                  </motion.span>
+                </div>
+                <p className="mt-1 text-micro text-arena">
+                  El costo de envío se calcula en el siguiente paso, según tu
+                  departamento.
+                </p>
+
+                <button
+                  type="button"
+                  onClick={() => setCheckoutAbierto(true)}
+                  className="mt-4 w-full rounded-full bg-champan py-4 font-medium text-noche transition-colors hover:bg-oro-claro"
+                >
+                  Ir a pagar
+                </button>
+
+                <a
+                  href={linkWhatsApp(mensajePedidoWhatsApp(lineas, total))}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 flex w-full items-center justify-center gap-2 rounded-full border border-vetiver/50 py-4 font-medium text-vetiver transition-colors hover:bg-vetiver/10"
+                >
+                  <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden>
+                    <path d="M17.47 14.38c-.29-.15-1.7-.84-1.96-.93-.26-.1-.46-.15-.65.15-.2.29-.75.93-.92 1.12-.17.2-.34.22-.63.08-.29-.15-1.22-.45-2.33-1.44-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.48.1-.2.05-.37-.02-.51-.08-.15-.65-1.58-.9-2.16-.24-.58-.48-.5-.65-.5-.17 0-.37-.02-.56-.02-.2 0-.51.07-.78.37-.26.29-1.02 1-1.02 2.42 0 1.43 1.04 2.82 1.19 3.01.15.2 2.05 3.13 4.96 4.39.7.3 1.24.48 1.66.62.7.22 1.34.19 1.84.11.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.25.17-1.37-.07-.12-.26-.19-.55-.34z" />
+                    <path d="M12.02 2.5c-5.26 0-9.53 4.27-9.53 9.53 0 1.68.44 3.32 1.28 4.76L2.5 21.5l4.85-1.27a9.5 9.5 0 0 0 4.67 1.24h.01c5.26 0 9.53-4.27 9.53-9.53s-4.27-9.44-9.54-9.44Zm0 17.32h-.01a7.8 7.8 0 0 1-3.98-1.09l-.29-.17-2.95.78.79-2.88-.19-.3a7.79 7.79 0 0 1-1.2-4.14c0-4.32 3.51-7.83 7.84-7.83 2.1 0 4.06.82 5.54 2.3a7.78 7.78 0 0 1 2.29 5.54c0 4.32-3.52 7.79-7.84 7.79Z" />
+                  </svg>
+                  Comprar por WhatsApp
+                </a>
+
+                <p className="mt-3 text-center text-micro text-arena">
+                  Pagás con Mercado Pago: tarjetas OCA, Visa y Mastercard, o en
+                  efectivo por Abitab y Redpagos. Envíos a todo {site.pais}.
+                </p>
+              </footer>
+            )}
+          </motion.aside>
+        </>
+      )}
+
+      <CheckoutModal
+        abierto={checkoutAbierto}
+        onCerrar={() => setCheckoutAbierto(false)}
+        items={lineas.map((l) => ({ id: l.producto.id, cantidad: l.cantidad }))}
+        total={total}
+      />
+    </AnimatePresence>
+  );
+}
