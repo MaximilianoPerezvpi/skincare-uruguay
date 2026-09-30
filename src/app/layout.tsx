@@ -62,8 +62,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0F0F11",
-  colorScheme: "dark",
+  themeColor: "#FAF8F5",
+  colorScheme: "light",
 };
 
 /* Datos estructurados: le dicen a Google que esto es una tienda real con

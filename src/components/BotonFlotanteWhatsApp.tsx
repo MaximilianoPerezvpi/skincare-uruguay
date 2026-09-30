@@ -31,7 +31,7 @@ export default function BotonFlotanteWhatsApp() {
       aria-label="Consultar por WhatsApp al +598 097 443 176"
       // bottom-24 en mobile: dejar lugar a la barra fija de compra de la
       // página de producto, que también vive abajo del todo.
-      className="fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-vetiver text-noche shadow-[0_8px_24px_-6px_rgba(0,0,0,0.5)] transition-transform hover:scale-105 md:bottom-6"
+      className="fixed bottom-24 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-vetiver text-noche shadow-[0_8px_24px_-6px_rgba(45,42,38,0.35)] transition-transform hover:scale-105 md:bottom-6"
     >
       {!sinMovimiento && (
         <motion.span

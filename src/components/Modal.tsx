@@ -51,7 +51,7 @@ export default function Modal({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onCerrar}
-            className="fixed inset-0 z-[80] bg-noche/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[80] bg-marfil/30 backdrop-blur-sm"
             aria-hidden
           />
 

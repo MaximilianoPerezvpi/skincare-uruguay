@@ -73,7 +73,7 @@ export default function CheckoutModal({
   }
 
   const CAMPO =
-    "w-full rounded-xl border border-borde bg-noche px-4 py-3 text-sm text-marfil outline-none transition-colors focus-visible:border-champan";
+    "w-full rounded-2xl border border-borde bg-noche px-4 py-3 text-sm text-marfil outline-none transition-colors focus-visible:border-champan";
 
   return (
     <Modal abierto={abierto} onCerrar={onCerrar} etiqueta="Datos de envío" anchoMaximo="max-w-lg">
@@ -149,7 +149,7 @@ export default function CheckoutModal({
         {error && (
           <p
             role="alert"
-            className="mt-4 rounded-lg border border-champan/40 bg-champan/10 px-4 py-3 text-sm text-marfil"
+            className="mt-4 rounded-2xl border border-champan/40 bg-champan/10 px-4 py-3 text-sm text-marfil"
           >
             {error}
           </p>

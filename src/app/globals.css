@@ -8,22 +8,34 @@
    en los componentes.
    ────────────────────────────────────────────────────────────── */
 @theme {
-  /* Base: negros sobrios y apenas fríos, estética clínica. */
-  --color-noche: #0f0f11;
-  --color-carbon: #151518;
-  --color-humo: #1d1d21;
-  --color-borde: #2b2b31;
+  /* Clean K-Beauty luminoso. Los nombres de token se conservan para no
+     tocar cada componente; lo que manda es el ROL de cada uno:
+       noche  = fondo principal (marfil cálido)
+       carbon = tarjetas (blanco puro)
+       humo   = superficies secundarias (lino)
+       marfil = texto principal (mocha oscuro) · arena = texto secundario
+       champan = acción principal (carbón elegante) · oro-claro = su hover */
+  --color-noche: #faf8f5;
+  --color-carbon: #ffffff;
+  --color-humo: #f4f0ea;
+  --color-borde: #e7e5e4; /* stone-200 */
 
   /* Acentos */
-  --color-champan: #d4af37; /* dorado suave: precios, CTA principal */
-  --color-oro-claro: #e6cd7a; /* hover / brillos */
-  --color-oro-vivo: #d4af37; /* glow de tarjetas */
-  --color-vetiver: #8fb39a; /* verde botánico: ingredientes, WhatsApp, "ok" */
-  --color-cristal: #e9dfcf; /* beige cristalino: detalles y superficies claras */
+  --color-champan: #1a1a1a; /* CTA, precios, estados activos */
+  --color-oro-claro: #000000; /* hover del CTA */
+  --color-oro-vivo: #c9a99a; /* rosé: estrellas y halos suaves */
+  --color-vetiver: #4e7a5c; /* verde botánico legible: ingredientes, WhatsApp, "ok" */
+  --color-cristal: #8c6a5a; /* rosé profundo: kickers y etiquetas sobre nude */
+
+  /* Superficies de acento cosmético */
+  --color-nude: #e8d8ce;
+  --color-botanico: #e2e9e3;
+  --color-lino: #f4f0ea;
+  --color-crema: #f7f4ef;
 
   /* Texto */
-  --color-marfil: #f4efe7;
-  --color-arena: #aaa39a;
+  --color-marfil: #2d2a26;
+  --color-arena: #6b645d;
 
   /* Tipografías (las inyecta next/font desde layout.tsx) */
   --font-display: var(--font-display-familia), Georgia, "Times New Roman", serif;
@@ -74,21 +86,20 @@ body {
 
 /* ── Utilidades propias ───────────────────────────────────────── */
 
-/* Vidrio: superficie translúcida con borde cálido. Se usa en el header
-   y en las tarjetas, nunca sobre fondos planos sin nada detrás. */
+/* Vidrio: blanco traslúcido con blur y línea inferior fina (navbar). */
 @utility vidrio {
-  background-color: color-mix(in oklab, var(--color-carbon) 72%, transparent);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid color-mix(in oklab, var(--color-borde) 85%, transparent);
+  background-color: color-mix(in oklab, var(--color-carbon) 90%, transparent);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--color-borde);
 }
 
-/* Filo dorado: línea de luz fina para separar secciones. */
+/* Filo: línea fina que se desvanece en los extremos, para separar secciones. */
 @utility filo-oro {
   background-image: linear-gradient(
     90deg,
     transparent,
-    color-mix(in oklab, var(--color-champan) 55%, transparent),
+    var(--color-borde),
     transparent
   );
 }
@@ -100,13 +111,15 @@ body {
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-champan);
+  color: var(--color-cristal);
 }
 
-/* Glow dorado de tarjeta: un halo apenas visible al hover (usar con
-   `hover:glow-oro` + `transition-shadow`), nunca un brillo genérico blanco. */
+/* Sombra vaporosa de tarjeta al hover (usar con `hover:glow-oro` +
+   `transition-shadow`): difusa y cálida, nunca un contorno duro. */
 @utility glow-oro {
-  box-shadow: 0 0 32px -8px color-mix(in oklab, var(--color-oro-vivo) 45%, transparent);
+  box-shadow:
+    0 1px 2px rgb(45 42 38 / 0.04),
+    0 16px 40px -16px rgb(45 42 38 / 0.18);
 }
 
 /* Contenedor único del sitio. */

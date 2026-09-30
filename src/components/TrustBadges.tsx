@@ -1,34 +1,30 @@
 /**
- * Badges de confianza para Uruguay: las tres objeciones que frenan una compra
- * de skincare online ("¿me va a hacer mal?", "¿cuándo llega?", "¿puedo pagar
- * en cuotas?"), resueltas de un vistazo. Se usa al pie del Hero.
+ * Barra de garantías: tira horizontal crema justo debajo del Hero. Responde
+ * las tres objeciones que frenan una compra de skincare online ("¿me va a
+ * hacer mal?", "¿cuándo llega?", "¿puedo pagar en cuotas?") de un vistazo.
  */
 const BADGES = [
-  { icono: "✨", texto: "Fórmulas Testeadas Dermatológicamente" },
+  { icono: "🌸", texto: "Apto para todo tipo de pieles" },
   { icono: "🚚", texto: "Envíos a todo Uruguay por DAC (24-48 hs)" },
-  { icono: "💳", texto: "Hasta 12 Cuotas con Mercado Pago" },
+  { icono: "💳", texto: "Hasta 12 cuotas sin recargo por Mercado Pago" },
 ] as const;
 
-export default function TrustBadges({ className = "" }: { className?: string }) {
+export default function TrustBadges() {
   return (
-    <ul
-      className={`grid gap-3 sm:grid-cols-3 ${className}`}
-      aria-label="Por qué comprarnos"
-    >
-      {BADGES.map((b) => (
-        <li
-          key={b.texto}
-          className="flex items-center gap-3 rounded-2xl border border-cristal/10 bg-white/[0.03] px-4 py-3 backdrop-blur-md"
-        >
-          <span
-            aria-hidden
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-champan/30 bg-noche text-base"
-          >
-            {b.icono}
-          </span>
-          <span className="text-sm leading-snug text-marfil">{b.texto}</span>
-        </li>
-      ))}
-    </ul>
+    <section aria-label="Por qué comprarnos" className="border-y border-stone-200 bg-[#F7F4EF]">
+      <ul className="marco grid gap-3 py-5 sm:grid-cols-3 sm:gap-6">
+        {BADGES.map((b) => (
+          <li key={b.texto} className="flex items-center gap-3 sm:justify-center">
+            <span
+              aria-hidden
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-base shadow-sm"
+            >
+              {b.icono}
+            </span>
+            <span className="text-sm leading-snug text-marfil">{b.texto}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

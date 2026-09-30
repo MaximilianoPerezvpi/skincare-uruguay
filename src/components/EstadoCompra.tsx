@@ -51,7 +51,7 @@ export default function EstadoCompra({ estado }: { estado: Estado }) {
       <p className="mt-5 max-w-[52ch] leading-relaxed text-arena">{cuerpo}</p>
 
       {pagoId && (
-        <p className="cifras mt-6 rounded-xl border border-borde bg-carbon px-5 py-4 text-sm text-arena">
+        <p className="cifras mt-6 rounded-2xl border border-borde bg-carbon px-5 py-4 text-sm text-arena">
           Número de pago: <span className="text-marfil">{pagoId}</span>
           <span className="mt-1 block text-micro">
             Guardalo: es lo que te pedimos si escribís por una consulta.

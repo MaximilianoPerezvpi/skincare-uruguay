@@ -74,7 +74,7 @@ export default function CartDrawer() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={cerrar}
-            className="fixed inset-0 z-[60] bg-noche/70 backdrop-blur-[2px]"
+            className="fixed inset-0 z-[60] bg-marfil/25 backdrop-blur-[2px]"
             aria-hidden
           />
 
@@ -146,7 +146,7 @@ export default function CartDrawer() {
                         transition={{ duration: 0.2 }}
                         className="flex gap-4 py-5"
                       >
-                        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-humo">
+                        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl bg-humo">
                           <ImagenProducto
                             producto={linea.producto}
                             sizes="80px"

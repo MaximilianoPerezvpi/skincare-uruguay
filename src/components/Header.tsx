@@ -7,9 +7,8 @@ import { navegacion } from "@/lib/site";
 import BotonCarrito from "./BotonCarrito";
 
 /**
- * Header fijo, siempre con fondo oscuro y vidrio esmerilado (antes solo
- * arriba del todo era transparente y se ponía "vidrio" recién al scrollear;
- * ahora es legible desde el primer frame, sobre cualquier hero). El carrito
+ * Header fijo en blanco traslúcido con blur y línea inferior fina: legible
+ * desde el primer frame, sobre cualquier sección. El carrito
  * está siempre visible, también en mobile: es el botón que tiene que estar
  * a mano.
  */
@@ -27,20 +26,20 @@ export default function Header() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       {/* Franja de anuncio: fija, siempre sólida (no se pone vidrio al scrollear). */}
-      <div className="flex h-8 items-center justify-center bg-noche px-4 text-center">
+      <div className="flex h-8 items-center justify-center bg-nude/60 px-4 text-center">
         <p className="kicker text-[0.68rem]">
           🚚 Envíos por DAC a todo Uruguay en 24-48 hs · 💳 Hasta 12 cuotas con
           Mercado Pago
         </p>
       </div>
 
-      <div className="vidrio">
+      <div className="border-b border-stone-200 bg-white/90 backdrop-blur-md">
         <div className="marco flex h-[72px] items-center justify-between gap-4">
           <Link href="/" className="flex items-baseline gap-2">
             <span className="font-display text-[1.6rem] leading-none text-marfil">
               Glass
             </span>
-            <span className="font-display text-[1.6rem] italic leading-none text-champan">
+            <span className="font-display text-[1.6rem] italic leading-none text-cristal">
               Skin
             </span>
             <span className="text-micro tracking-[0.2em] text-vetiver">UY</span>

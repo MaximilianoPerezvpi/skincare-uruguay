@@ -42,7 +42,7 @@ export default function KitDestacado() {
               className="object-cover"
             />
             {kit.badge && (
-              <span className="absolute left-5 top-5 rounded-full bg-champan px-4 py-1.5 text-micro font-semibold text-noche">
+              <span className="absolute left-5 top-5 rounded-full bg-nude px-4 py-1.5 text-micro font-semibold text-marfil">
                 {kit.badge}
               </span>
             )}
@@ -64,7 +64,7 @@ export default function KitDestacado() {
                 {kit.pasos.map((paso) => (
                   <li
                     key={paso}
-                    className="rounded-xl border border-borde bg-noche/60 px-4 py-3 text-sm text-marfil"
+                    className="rounded-2xl border border-borde bg-noche/60 px-4 py-3 text-sm text-marfil"
                   >
                     {paso}
                   </li>

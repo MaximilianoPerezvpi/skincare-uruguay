@@ -46,10 +46,10 @@ export default function TarjetaProducto({
   return (
     <motion.article
       layout
-      className={`group flex h-full flex-col overflow-hidden rounded-2xl bg-carbon transition-all duration-300 hover:-translate-y-1 hover:glow-oro ${
+      className={`group flex h-full flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:glow-oro ${
         producto.destacado
-          ? "border border-champan/35"
-          : "border border-borde hover:border-oro-vivo/40"
+          ? "border-nude"
+          : "border-stone-200 hover:border-stone-300"
       }`}
     >
       <Link
@@ -67,12 +67,12 @@ export default function TarjetaProducto({
         />
 
         {producto.badge && (
-          <span className="absolute left-3 top-3 rounded-full bg-champan px-3 py-1 text-micro font-semibold text-noche">
+          <span className="absolute left-3 top-3 rounded-full bg-nude px-3 py-1 text-micro font-semibold text-marfil">
             {producto.badge}
           </span>
         )}
 
-        <span className="absolute bottom-3 left-3 rounded-full border border-cristal/20 bg-noche/70 px-3 py-1 text-micro text-cristal backdrop-blur-sm">
+        <span className="absolute bottom-3 left-3 rounded-full bg-white/85 px-3 py-1 text-micro text-arena shadow-sm backdrop-blur-sm">
           {producto.categoria}
         </span>
 
@@ -111,7 +111,7 @@ export default function TarjetaProducto({
             )}
           </div>
           {descuento > 0 && (
-            <p className="mt-1 text-micro text-vetiver">Ahorrás {precio(descuento)}</p>
+            <p className="mt-2 inline-flex rounded-full bg-botanico px-2.5 py-0.5 text-micro font-medium text-vetiver">Ahorrás {precio(descuento)}</p>
           )}
 
           <motion.button
@@ -119,7 +119,7 @@ export default function TarjetaProducto({
             disabled={!disponible || sinMasStock}
             onClick={manejarAgregar}
             whileTap={disponible && !sinMasStock ? { scale: 0.95 } : undefined}
-            className={`mt-4 w-full overflow-hidden rounded-full border py-3 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-8px_var(--color-oro-vivo)] disabled:cursor-not-allowed disabled:translate-y-0 disabled:border-borde disabled:bg-transparent disabled:text-arena disabled:shadow-none ${
+            className={`mt-4 w-full overflow-hidden rounded-full border py-3 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md disabled:cursor-not-allowed disabled:translate-y-0 disabled:border-borde disabled:bg-transparent disabled:text-arena disabled:shadow-none ${
               agregado
                 ? "border-vetiver bg-vetiver text-noche"
                 : "border-transparent bg-champan font-semibold text-noche hover:bg-oro-claro"

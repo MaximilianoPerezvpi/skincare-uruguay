@@ -54,7 +54,7 @@ export default function PaginaContacto() {
                 href={c.href}
                 target={c.externo ? "_blank" : undefined}
                 rel={c.externo ? "noopener noreferrer" : undefined}
-                className="flex items-center justify-between gap-4 rounded-xl border border-borde bg-carbon px-6 py-5 transition-colors hover:border-champan"
+                className="flex items-center justify-between gap-4 rounded-2xl border border-borde bg-carbon px-6 py-5 transition-colors hover:border-champan"
               >
                 <div>
                   <p className="font-display text-[1.1rem] text-marfil">

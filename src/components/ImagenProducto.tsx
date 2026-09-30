@@ -39,7 +39,7 @@ export default function ImagenProducto({
 function FallbackFrasco({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-carbon via-noche to-carbon ${className}`}
+      className={`absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-crema via-white to-lino ${className}`}
     >
       <svg
         viewBox="0 0 120 200"

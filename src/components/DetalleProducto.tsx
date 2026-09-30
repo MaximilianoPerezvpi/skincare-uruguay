@@ -99,7 +99,7 @@ export default function DetalleProducto({
             className={`object-cover ${disponible ? "" : "opacity-40 grayscale"}`}
           />
           {producto.badge && (
-            <span className="absolute left-4 top-4 rounded-full bg-champan px-3 py-1 text-micro font-semibold text-noche">
+            <span className="absolute left-4 top-4 rounded-full bg-nude px-3 py-1 text-micro font-semibold text-marfil">
               {producto.badge}
             </span>
           )}
@@ -145,7 +145,7 @@ export default function DetalleProducto({
               {producto.pasos.map((paso) => (
                 <li
                   key={paso}
-                  className="rounded-xl border border-borde bg-carbon px-4 py-3 text-sm text-marfil"
+                  className="rounded-2xl border border-borde bg-carbon px-4 py-3 text-sm text-marfil"
                 >
                   {paso}
                 </li>
@@ -203,7 +203,7 @@ export default function DetalleProducto({
           </a>
 
           {/* Beneficios */}
-          <div className="mt-8 rounded-xl border border-borde bg-carbon p-5">
+          <div className="mt-8 rounded-2xl border border-borde bg-carbon p-5">
             <h2 className="text-micro uppercase tracking-[0.2em] text-arena">
               Beneficios
             </h2>
@@ -221,7 +221,7 @@ export default function DetalleProducto({
           </div>
 
           {/* Insignias de confianza */}
-          <ul className="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-borde bg-borde sm:grid-cols-3">
+          <ul className="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-borde bg-borde sm:grid-cols-3">
             {CONFIANZA.map((texto) => (
               <li key={texto} className="bg-carbon px-4 py-4 text-center text-sm text-marfil">
                 {texto}

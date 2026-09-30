@@ -18,21 +18,21 @@ export default function OpenGraphImage() {
           justifyContent: "center",
           padding: "0 90px",
           background:
-            "radial-gradient(circle at 80% 30%, #2a2618 0%, #0F0F11 55%)",
-          color: "#F4EFE7",
+            "radial-gradient(circle at 80% 30%, #E8D8CE 0%, #FAF8F5 60%)",
+          color: "#2D2A26",
           fontFamily: "Georgia, serif",
         }}
       >
-        <div style={{ fontSize: 28, letterSpacing: 8, color: "#8FB39A" }}>
+        <div style={{ fontSize: 28, letterSpacing: 8, color: "#4E7A5C" }}>
           K-BEAUTY · URUGUAY
         </div>
         <div style={{ fontSize: 92, marginTop: 24 }}>{site.nombre}</div>
         <div
-          style={{ fontSize: 40, marginTop: 16, color: "#D4AF37", fontStyle: "italic" }}
+          style={{ fontSize: 40, marginTop: 16, color: "#8C6A5A", fontStyle: "italic" }}
         >
           Rutina Coreana Glass Skin en 3 pasos
         </div>
-        <div style={{ fontSize: 28, marginTop: 40, color: "#AAA39A" }}>
+        <div style={{ fontSize: 28, marginTop: 40, color: "#6B645D" }}>
           Envíos a todo Uruguay por DAC · Hasta 12 cuotas con Mercado Pago
         </div>
       </div>

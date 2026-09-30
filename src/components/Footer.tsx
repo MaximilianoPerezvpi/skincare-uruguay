@@ -86,14 +86,13 @@ function AcordeonFAQ() {
 
 export default function Footer() {
   return (
-    <footer className="border-t border-borde bg-carbon">
-      <div aria-hidden className="filo-oro h-px w-full" />
+    <footer className="border-t border-stone-200 bg-[#F4F0EA]">
 
       {/* Fila principal: 4 columnas (logo, enlaces, redes, medios de pago). */}
       <div className="marco grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         <div className="max-w-[28ch]">
           <p className="font-display text-[1.6rem] text-marfil">
-            Glass <span className="italic text-champan">Skin</span>{" "}
+            Glass <span className="italic text-cristal">Skin</span>{" "}
             <span className="text-micro tracking-[0.2em] text-vetiver">UY</span>
           </p>
           <p className="mt-3 text-sm leading-relaxed text-arena">
@@ -134,7 +133,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Instagram: @${site.instagram}`}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-borde text-arena transition-colors hover:border-champan hover:text-champan"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 bg-white text-arena shadow-sm transition-colors hover:border-champan hover:text-champan"
             >
               <IconoInstagram className="h-4.5 w-4.5" />
             </a>
@@ -143,7 +142,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Escribinos por WhatsApp"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-borde text-arena transition-colors hover:border-vetiver hover:text-vetiver"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 bg-white text-arena shadow-sm transition-colors hover:border-vetiver hover:text-vetiver"
             >
               <IconoWhatsApp className="h-4.5 w-4.5" />
             </a>
@@ -157,7 +156,7 @@ export default function Footer() {
             {MEDIOS_PAGO.map((medio) => (
               <span
                 key={medio}
-                className="rounded-full border border-borde px-3 py-1 text-micro text-marfil"
+                className="rounded-full border border-stone-200 bg-white px-3 py-1 text-micro text-marfil"
               >
                 {medio}
               </span>
@@ -187,7 +186,7 @@ export default function Footer() {
               {AGENCIAS_ENVIO.map((agencia) => (
                 <span
                   key={agencia}
-                  className="rounded-full border border-borde px-3 py-1 text-micro text-marfil"
+                  className="rounded-full border border-stone-200 bg-white px-3 py-1 text-micro text-marfil"
                 >
                   {agencia}
                 </span>
